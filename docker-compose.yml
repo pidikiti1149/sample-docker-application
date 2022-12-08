@@ -1,0 +1,35 @@
+
+version: '3'
+
+services:
+  httpd:
+    build: ./httpd/
+    container_name: httpd-app
+    ports:
+      - "80:80"
+    networks:
+      - testnetwork
+    volumes:
+      - type: volume
+        source: myvol
+        target: /vol
+
+  nginx:
+    build: ./nginx/
+    container_name: nginx-app
+    ports:
+      - "82:80"
+    networks:
+      - testnetwork
+    volumes:
+      - type: volume
+        source: myvol
+        target: /vol
+
+networks:
+  testnetwork:
+    driver: bridge
+
+volumes:
+  myvol:
+    external: true
